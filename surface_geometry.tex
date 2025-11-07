@@ -1,0 +1,281 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{microtype}
+\title{Parametric Surfaces and Curvature: Intuition to Formula}
+\author{}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Seeing Parametric Surfaces}
+Imagine drawing a grid on a rubber sheet and draping it in space. Parametric coordinates $(u,v)$ label the grid lines, while the embedding $\mathbf{r}(u,v)$ tells us where each labeled point lands in $\mathbb{R}^3$. Figure~\ref{fig:torus} shows this idea on a torus: the $u$-direction runs around the hole, the $v$-direction runs around the tube. Because the grid survives the deformation, we can reason about lengths, areas, and bending by tracking how the grid vectors change.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/plotly_torus.png}
+  \caption{Plotly rendering of a torus with radii $(R,r)=(2,0.7)$. The parametric net traces parallels and meridians, reminding us that surfaces are deformed coordinate grids.}
+  \label{fig:torus}
+\end{figure}
+\section{Tangent Planes Before Formulas}
+Pick a point on the sheet and zoom in: the surface looks indistinguishable from a plane. The vectors obtained by nudging $u$ or $v$ a little---the columns of the Jacobian---span this tangent plane. Figure~\ref{fig:tangent} depicts the tangent plane and normal on a paraboloid patch. The plane approximates the surface locally, while the normal tells us how the sheet is oriented in space.
+
+Formally, a \emph{parametric surface} is a smooth map $\mathbf{r}:U\subset\mathbb{R}^2\to\mathbb{R}^3$. We demand \emph{regularity}: $\mathbf{r}_u \times \mathbf{r}_v \neq 0$, meaning the two coordinate nudges are independent and define the tangent plane $\mathrm{span}\{\mathbf{r}_u,\mathbf{r}_v\}$. The unit normal is
+\begin{equation}
+\mathbf{n}(u,v) = \frac{\mathbf{r}_u \times \mathbf{r}_v}{\lVert \mathbf{r}_u \times \mathbf{r}_v \rVert}.
+\end{equation}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/plotly_tangent_plane.png}
+  \caption{A paraboloid patch (green) with its tangent plane (orange) and unit normal (red). Intuitively, the plane carries the best linear approximation of the surface near the point.}
+  \label{fig:tangent}
+\end{figure}
+\section{First Fundamental Form: Measuring on the Surface}
+When we pull a vector $(du,dv)$ from the parameter domain, it becomes $d\mathbf{r} = \mathbf{r}_u du + \mathbf{r}_v dv$ on the surface. The squared length of this vector is
+\begin{equation}
+ ds^2 = E\,du^2 + 2F\,dudv + G\,dv^2,
+\end{equation}
+where
+\begin{equation}
+E = \mathbf{r}_u \cdot \mathbf{r}_u, \qquad F = \mathbf{r}_u \cdot \mathbf{r}_v, \qquad G = \mathbf{r}_v \cdot \mathbf{r}_v.
+\end{equation}
+\paragraph{Intuition.} The metric answers the question: ``if I walk $du$ along $u$ and $dv$ along $v$, what actual distance did I travel on the deformed sheet?'' Large $E$ or $G$ indicate the grid has been stretched; nonzero $F$ means the coordinate directions have skewed.
+\paragraph{From Intuition to Formula.} Dotting $d\mathbf{r}$ with itself expands exactly into the above quadratic form, so the coefficients are nothing but the inner products of the basis vectors $\mathbf{r}_u$ and $\mathbf{r}_v$. Thus the metric is the Gram matrix of the tangent basis.
+\section{Second Fundamental Form: Measuring Bending}
+Where the first form measures in-plane change, the second form captures how the surface peels away from the tangent plane. Imagine sliding along the $u$ direction; if the surface bends upward, the normal vector rotates. The rate of change of the normal along each direction quantifies curvature.
+
+Define
+\begin{equation}
+L = \mathbf{r}_{uu} \cdot \mathbf{n}, \qquad M = \mathbf{r}_{uv} \cdot \mathbf{n}, \qquad N = \mathbf{r}_{vv} \cdot \mathbf{n}.
+\end{equation}
+Then the \emph{second fundamental form} is
+\begin{equation}
+\mathrm{II} = L\,du^2 + 2M\,dudv + N\,dv^2.
+\end{equation}
+\paragraph{Intuition to Formula.} The acceleration vectors $\mathbf{r}_{uu}$, $\mathbf{r}_{uv}$, $\mathbf{r}_{vv}$ describe how the surface moves relative to the parameter net. Projecting them onto the normal isolates the out-of-plane component---exactly the part responsible for bending. Hence $L,M,N$ encode how sharply each coordinate curve leaves the tangent plane.
+\section{Shape Operator and Curvatures}
+The \emph{shape operator} $S$ tells how the normal changes when we move along the surface: $S(X) = -D_X \mathbf{n}$. Because $\mathbf{n}$ stays unit-length, $S$ maps tangent vectors back into the tangent plane. Solving $\mathrm{II}(X,Y) = \mathrm{I}(SX,Y)$ shows that the matrix of $S$ in the basis $(\mathbf{r}_u,\mathbf{r}_v)$ is obtained by multiplying the inverse metric with the second-form coefficients.
+\subsection{Principal Directions}
+Every point has two special directions where the normal swings purely within the plane of motion. These eigen-directions of $S$ are the \emph{principal directions}; their eigenvalues $k_1,k_2$ are the \emph{principal curvatures}. Intuitively, if you slice the surface with the plane containing a principal direction and the normal, you get a planar curve whose curvature equals $k_i$.
+\subsection{Formulas}
+Translating the intuition leads to
+\begin{equation}
+ k_1 + k_2 = \frac{EN - 2FM + GL}{EG - F^2}, \qquad k_1 k_2 = \frac{LN - M^2}{EG - F^2}.
+\end{equation}
+The trace and determinant of $S$ become the mean curvature $H = (k_1 + k_2)/2$ and Gaussian curvature $K = k_1 k_2$.
+\paragraph{Reading the Numbers.} 
+\begin{itemize}
+  \item $K>0$: both principal curvatures share a sign; the surface is dome-like (elliptic point).
+  \item $K<0$: the principal curvatures have opposite signs; you are on a saddle. Figure~\ref{fig:saddle} shows the hyperbolic paraboloid colored by its negative $K$.
+  \item $K=0$: one direction is flat (parabolic point), as on a cylinder.
+\end{itemize}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/plotly_saddle.png}
+  \caption{Saddle surface $z=x^2 - y^2$ colored by Gaussian curvature (negative everywhere). Opposite bending along principal directions produces the blue-red coloration.}
+  \label{fig:saddle}
+\end{figure}
+\section{Worked Examples}
+\subsection{Metric of the Torus}\label{sec:torus-metric}
+For $\mathbf{r}(u,v)=((R+r\cos v)\cos u,(R+r\cos v)\sin u,r\sin v)$ we compute
+\begin{align*}
+\mathbf{r}_u &= (-(R+r\cos v)\sin u,(R+r\cos v)\cos u,0), \\
+\mathbf{r}_v &= (-r\sin v\cos u,-r\sin v\sin u,r\cos v).
+\end{align*}
+Their inner products yield
+\begin{equation}
+E = (R+r\cos v)^2, \qquad F = 0, \qquad G = r^2.
+\end{equation}
+Thus walking along $u$ stretches distance according to the major radius $(R+r\cos v)$, while walking along $v$ sees the small radius $r$; the orthogonality $F=0$ reflects the picture in Figure~\ref{fig:torus}.
+\subsection{Elliptic Paraboloid}
+For $\mathbf{r}(u,v) = (u,v,\tfrac{1}{2}(u^2 + v^2))$ we already know $\mathbf{r}_u=(1,0,u)$ and $\mathbf{r}_v=(0,1,v)$. Plugging into the metric and curvature formulas gives
+\begin{align*}
+E &= 1+u^2, & F &= uv, & G &= 1+v^2, \\
+L &= \frac{1}{\sqrt{1+u^2+v^2}}, & M &= 0, & N &= \frac{1}{\sqrt{1+u^2+v^2}}, \\
+H &= \frac{(1+u^2) + (1+v^2)}{2(1+u^2+v^2)^{3/2}}, & K &= \frac{1}{(1+u^2+v^2)^2}.
+\end{align*}
+Figure~\ref{fig:paraboloid} colors the surface by $H$, highlighting higher curvature near the vertex. The formulas confirm the intuition: as $u$ and $v$ grow, the denominators enlarge and the surface flattens.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/plotly_paraboloid.png}
+  \caption{Elliptic paraboloid colored by mean curvature. The picture mirrors the analytic expression for $H(u,v)$.}
+  \label{fig:paraboloid}
+\end{figure}
+\section{Gauss Map and Intrinsic Meaning of $K$}
+The Gauss map $N:U\to S^2$ sends each parameter pair to the unit normal direction. Pictorially, $N$ records how the little arrows in Figure~\ref{fig:tangent} sweep across the sphere as we traverse the surface. The differential $dN$ measures how fast the normal rotates; indeed $dN(X) = -S(X)$, so principal directions correspond to eigen-directions of $dN$.
+
+Gauss's \emph{Theorema Egregium} states that $K$ depends only on the metric (first fundamental form). Intuitively, this means any measurement you can perform with a ruler on the surface---without peeking into ambient space---already determines $K$. Bending without stretching (an isometry) keeps the metric, hence preserves $K$; this explains why you cannot flatten an orange peel without tearing (positive $K$) but you can roll paper into a cylinder ($K=0$).
+
+\section{Parallel Transport on Surfaces}
+\subsection{Idea}
+Parallel transport answers: ``how do I move a tangent vector along a curve without twisting it relative to the surface?'' Imagine walking on the torus carrying an arrow drawn on the surface. At each infinitesimal step you project the usual derivative of the arrow back onto the tangent plane; the result stays tangent and changes only as much as the geometry forces it to.
+
+\subsection{Formal Definition}
+Given a surface with metric coefficients $E,F,G$, let $\nabla$ denote the Levi-Civita connection. For a tangent vector field $V=V^u\mathbf{r}_u + V^v\mathbf{r}_v$ along a parameterized curve $\gamma(t)=(u(t),v(t))$, the covariant derivative is
+\begin{equation}
+\nabla_{\dot{\gamma}} V = \left(\frac{dV^u}{dt} + \Gamma^{u}_{uu}V^u\dot{u} + \Gamma^{u}_{uv}V^u\dot{v} + \Gamma^{u}_{vu}V^v\dot{u} + \Gamma^{u}_{vv}V^v\dot{v}\right)\mathbf{r}_u + (\text{similar terms with }u\leftrightarrow v).
+\end{equation}
+Here the Christoffel symbols are
+\begin{equation}
+\Gamma^{u}_{uu} = \frac{1}{2}E^{-1}(E_u), \qquad \Gamma^{u}_{uv} = \frac{1}{2}E^{-1}(E_v - F_u), \quad \text{etc.}
+\end{equation}
+obtained by solving $d\mathbf{r}_i = \Gamma^{k}_{ij}\mathbf{r}_k\,du^j$. A vector is parallel transported when $\nabla_{\dot{\gamma}} V = 0$, meaning its change is exactly canceled by how the basis $\{\mathbf{r}_u,\mathbf{r}_v\}$ itself twists.
+
+\subsection{Holonomy Intuition}
+Carrying a vector around a small loop encodes curvature: the failure to return with the same direction equals the Gaussian curvature times the enclosed area (Gauss--Bonnet in miniature). This is why walking around the top of a mountain tilts your hiking pole even if you tried to keep it ``straight''.
+
+\subsection{Elementary View}
+Work in $\mathbb{R}^3$ and differentiate a tangent vector field $V$ along the curve: $\dot{V}$. Split it into tangential and normal parts using the projector $P_T(W)=W-(W\cdot\mathbf{n})\mathbf{n}$. Declaring parallel transport means $P_T(\dot{V})=0$, i.e., the only change in $V$ is forced by the surface normal. Writing $V = V^u\mathbf{r}_u + V^v\mathbf{r}_v$ and expanding $P_T(\dot{V})=0$ reproduces exactly the coordinate expression $\nabla_{\dot{\gamma}}V=0$, so the two viewpoints coincide: either use the Levi-Civita connection or insist that the ambient acceleration of $V$ is purely normal.
+
+\section{Deriving the Geodesic Equations}
+\subsection{Energy Functional}
+Let $\gamma:[t_0,t_1]\to U$ be a curve with coordinates $(u(t),v(t))$. Its energy is
+\begin{equation}
+\mathcal{E}[\gamma] = \frac{1}{2}\int_{t_0}^{t_1} \big(E\,\dot{u}^2 + 2F\,\dot{u}\dot{v} + G\,\dot{v}^2\big)\,dt.
+\end{equation}
+Critical points of $\mathcal{E}$ (with fixed endpoints) are geodesics; arclength stationary curves coincide with energy minimizers because $ds^2$ is positive definite.
+
+\subsection{Variation}
+Perturb the curve by $u_\varepsilon(t)=u(t)+\varepsilon \eta(t)$, $v_\varepsilon(t)=v(t)+\varepsilon \xi(t)$ with $\eta,\xi$ vanishing at endpoints. Differentiate $\mathcal{E}$ with respect to $\varepsilon$ at $0$:
+\begin{align}
+\delta \mathcal{E} &= \int_{t_0}^{t_1} \Big[(E_u\,\eta + E_v\,\xi)\frac{\dot{u}^2}{2} + E\,\dot{u}\dot{\eta} + (F_u\,\eta + F_v\,\xi)\dot{u}\dot{v} + F(\dot{\eta}\dot{v} + \dot{u}\dot{\xi}) \nonumber\\
+&\qquad + (G_u\,\eta + G_v\,\xi)\frac{\dot{v}^2}{2} + G\,\dot{v}\dot{\xi}\Big] dt.
+\end{align}
+Integrating by parts on the terms containing $\dot{\eta}$ and $\dot{\xi}$ (boundary terms vanish) yields
+\begin{align}
+0 &= \delta \mathcal{E} = -\int_{t_0}^{t_1} \eta \left[\frac{d}{dt}(E\dot{u} + F\dot{v}) - \frac{1}{2}E_u\dot{u}^2 - F_u \dot{u}\dot{v} - \frac{1}{2}G_u\dot{v}^2\right] dt \nonumber\\
+&\quad - \int_{t_0}^{t_1} \xi \left[\frac{d}{dt}(F\dot{u} + G\dot{v}) - \frac{1}{2}E_v\dot{u}^2 - F_v \dot{u}\dot{v} - \frac{1}{2}G_v\dot{v}^2\right] dt.
+\end{align}
+Because $\eta$ and $\xi$ are arbitrary, each bracket must vanish, giving
+\begin{align}
+\frac{d}{dt}(E\dot{u} + F\dot{v}) - \frac{1}{2}E_u\dot{u}^2 - F_u \dot{u}\dot{v} - \frac{1}{2}G_u\dot{v}^2 &= 0, \label{eq:geo1}\\
+\frac{d}{dt}(F\dot{u} + G\dot{v}) - \frac{1}{2}E_v\dot{u}^2 - F_v \dot{u}\dot{v} - \frac{1}{2}G_v\dot{v}^2 &= 0. \label{eq:geo2}
+\end{align}
+
+\subsection{Connection Form}
+Expanding the derivatives and rearranging (\ref{eq:geo1})--(\ref{eq:geo2}) produce the classical geodesic equations
+\begin{align}
+\ddot{u} + \Gamma^{u}_{uu}\dot{u}^2 + 2\Gamma^{u}_{uv}\dot{u}\dot{v} + \Gamma^{u}_{vv}\dot{v}^2 &= 0, \\
+\ddot{v} + \Gamma^{v}_{uu}\dot{u}^2 + 2\Gamma^{v}_{uv}\dot{u}\dot{v} + \Gamma^{v}_{vv}\dot{v}^2 &= 0,
+\end{align}
+where the Christoffel symbols are determined by the metric matrix
+\begin{equation}
+g_{ij} = \begin{pmatrix}E & F \\ F & G\end{pmatrix}, \qquad g^{ij} = \frac{1}{\Delta}\begin{pmatrix} G & -F \\ -F & E\end{pmatrix}, \quad \Delta = EG - F^2,
+\end{equation}
+via
+\begin{equation}
+\Gamma^{i}_{jk} = \frac{1}{2} g^{i\ell}\left(\partial_j g_{k\ell} + \partial_k g_{j\ell} - \partial_\ell g_{jk}\right).
+\end{equation}
+Writing these out gives, for example,
+\begin{align}
+\Gamma^{u}_{uu} &= \frac{G E_u - 2F F_u + F E_v}{2\Delta}, & \Gamma^{u}_{uv} &= \frac{G E_v - F G_u}{2\Delta}, & \Gamma^{u}_{vv} &= \frac{G(2F_v - G_u) - F G_v}{2\Delta}, \\
+\Gamma^{v}_{uu} &= \frac{E(2F_u - E_v) - F E_u}{2\Delta}, & \Gamma^{v}_{uv} &= \frac{E G_u - F E_v}{2\Delta}, & \Gamma^{v}_{vv} &= \frac{E G_v - 2F F_v + F G_u}{2\Delta}.
+\end{align}
+These coefficients match the Levi-Civita connection used in the parallel-transport discussion; thus geodesics are precisely curves whose velocity vectors parallel transport themselves: $\nabla_{\dot{\gamma}}\dot{\gamma} = 0$.
+
+\subsection{Elementary Tangential-Acceleration Proof}
+Let $\gamma(t)=\mathbf{r}(u(t),v(t))$. Differentiate twice in $\mathbb{R}^3$:
+\begin{equation}
+\ddot{\gamma} = \ddot{u}\mathbf{r}_u + \ddot{v}\mathbf{r}_v + \dot{u}^2\mathbf{r}_{uu} + 2\dot{u}\dot{v}\mathbf{r}_{uv} + \dot{v}^2\mathbf{r}_{vv}.
+\end{equation}
+Projecting $\ddot{\gamma}$ onto the tangent plane via $P_T$ yields
+\begin{equation}
+P_T(\ddot{\gamma}) = \left(\ddot{u} + \Gamma^{u}_{uu}\dot{u}^2 + 2\Gamma^{u}_{uv}\dot{u}\dot{v} + \Gamma^{u}_{vv}\dot{v}^2\right)\mathbf{r}_u + \left(\ddot{v} + \Gamma^{v}_{uu}\dot{u}^2 + 2\Gamma^{v}_{uv}\dot{u}\dot{v} + \Gamma^{v}_{vv}\dot{v}^2\right)\mathbf{r}_v.
+\end{equation}
+Thus $P_T(\ddot{\gamma})=0$ if and only if the geodesic equations hold. In words, a geodesic is a curve whose Euclidean acceleration points purely along the surface normal—no tangential acceleration. This viewpoint leads to a second definition: parallel transport keeps vectors tangent by requiring their ambient derivatives be normal; geodesics keep their own velocity parallel by requiring $P_T(\ddot{\gamma})=0$.
+
+\section{Mean Curvature and Minimal Surfaces}
+While $K$ is intrinsic, $H$ depends on how the surface sits in space. The mean curvature vector $\mathbf{H}=H\mathbf{n}$ is the average of the principal curvature directions. Setting $H=0$ forces the surface to balance bending equally, producing minimal surfaces such as the catenoid. Physically, soap films adopt $H=0$ configurations because any local variation that reduces area would require nonzero mean curvature.
+
+\subsection{Area Functional}
+Let $\mathbf{r}(u,v)$ describe a surface patch over a domain $D\subset\mathbb{R}^2$. Its area is
+\begin{equation}
+\mathcal{A}[\mathbf{r}] = \int_D \sqrt{EG-F^2}\,du\,dv,
+\end{equation}
+where $E=\mathbf{r}_u\cdot\mathbf{r}_u$, $F=\mathbf{r}_u\cdot\mathbf{r}_v$, $G=\mathbf{r}_v\cdot\mathbf{r}_v$. To derive the Euler--Lagrange equations, perturb the surface by $\mathbf{r}_\varepsilon = \mathbf{r} + \varepsilon \mathbf{\Phi}$ with $\mathbf{\Phi}$ compactly supported inside $D$.
+
+\subsection{First Variation}
+Differentiate the integrand:
+\begin{equation}
+\frac{d}{d\varepsilon}\Big|_{\varepsilon=0} \sqrt{E_\varepsilon G_\varepsilon - F_\varepsilon^2} = \frac{1}{2}(EG-F^2)^{-1/2} \left( G\,\delta E + E\,\delta G - 2F\,\delta F \right).
+\end{equation}
+Using $\delta E = 2\mathbf{r}_u\cdot \Phi_u$, etc., yields
+\begin{align}
+\delta \mathcal{A} &= \int_D \frac{1}{\sqrt{EG-F^2}}\Big[G\,\mathbf{r}_u\cdot\Phi_u + E\,\mathbf{r}_v\cdot\Phi_v - F (\mathbf{r}_u\cdot\Phi_v + \mathbf{r}_v\cdot\Phi_u)\Big]\,du\,dv \nonumber\\
+&= \int_D \Big[\mathbf{W}^u\cdot\Phi_u + \mathbf{W}^v\cdot\Phi_v\Big]\,du\,dv,
+\end{align}
+with
+\begin{align}
+\mathbf{W}^u &= \frac{G\mathbf{r}_u - F\mathbf{r}_v}{\sqrt{EG-F^2}}, &
+\mathbf{W}^v &= \frac{E\mathbf{r}_v - F\mathbf{r}_u}{\sqrt{EG-F^2}}.
+\end{align}
+Integrating by parts (boundary terms vanish because $\Phi$ is compactly supported) gives
+\begin{equation}
+\delta \mathcal{A} = -\int_D \left[\partial_u \mathbf{W}^u + \partial_v \mathbf{W}^v \right]\cdot \Phi\, du\,dv.
+\end{equation}
+
+\subsection{Minimal Surface Equation}
+Since $\Phi$ is arbitrary, the Euler--Lagrange equation is
+\begin{equation}
+\partial_u \mathbf{W}^u + \partial_v \mathbf{W}^v = 0.
+\end{equation}
+Expanding $\mathbf{W}^u$ and $\mathbf{W}^v$ and projecting onto the normal direction yields
+\begin{equation}
+ (EG - F^2) H = 0 \quad \Longrightarrow \quad H = 0.
+\end{equation}
+Equivalently, in coordinates,
+\begin{equation}
+\partial_u\left(\frac{G \mathbf{r}_u - F \mathbf{r}_v}{\sqrt{EG - F^2}}\right) + \partial_v\left(\frac{E \mathbf{r}_v - F \mathbf{r}_u}{\sqrt{EG - F^2}}\right) = 0,
+\end{equation}
+which is the classical minimal surface equation. Written component-wise this becomes the divergence form
+\begin{equation}
+\partial_u\left(\frac{G \mathbf{r}_u - F \mathbf{r}_v}{\sqrt{EG - F^2}}\right) + \partial_v\left(\frac{E \mathbf{r}_v - F \mathbf{r}_u}{\sqrt{EG - F^2}}\right) = 0
+\quad \Longleftrightarrow \quad \Delta_g \mathbf{r} = 2H \mathbf{n} = 0.
+\end{equation}
+Thus surfaces with vanishing mean curvature are precisely stationary points of the area functional, matching the physical intuition for soap films.
+
+\section{Klein Bottle: Non-Orientable Example}
+Although the Klein bottle has no embedding in $\mathbb{R}^3$ without self-intersection, an immersion still conveys how parametric coordinates can twist. Figure~\ref{fig:klein} shows the standard immersion where one direction runs along a Möbius-like strip and the other threads through the neck before reattaching. Locally we may carry out all computations—$E,F,G$ remain the inner products of $\mathbf{r}_u$ and $\mathbf{r}_v$—but transporting a normal vector around the loop flips its sign, revealing the surface is non-orientable. This illustrates why curvature formulas are chart-local: the second form uses a chosen normal on each patch, while global inconsistencies reflect topological constraints rather than failures of the local theory.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figures/plotly_klein.png}
+  \caption{Immersed Klein bottle rendered with Plotly. Parametric lines show one coordinate wrapping twice before reconnecting, producing non-orientability.}
+  \label{fig:klein}
+\end{figure}
+
+\section{Geodesics on the Torus}
+\subsection{Intuitive Picture}
+Geodesics are the ``straightest'' possible paths: as you walk, you keep your velocity parallel to itself within the tangent plane, so no sideways acceleration is felt. Unfold the torus by cutting along a meridian and a parallel; the parameter rectangle with opposite sides identified now carries the induced metric from Section~\ref{sec:torus-metric}. Straight lines in this rectangle project to geodesics. When the slope $m=\Delta v/\Delta u$ is rational, the line closes after looping the torus a finite number of times; irrational slopes densely wind.
+
+\subsection{Geodesic Equations}
+With coordinates $(u,v)$, the kinetic energy from the first fundamental form is
+\begin{equation}
+L = E(u,v)\,\dot{u}^2 + 2F(u,v)\,\dot{u}\dot{v} + G(u,v)\,\dot{v}^2.
+\end{equation}
+Applying the Euler--Lagrange equations yields
+\begin{align}
+\ddot{u} + \Gamma^{u}_{uu}\dot{u}^2 + 2\Gamma^{u}_{uv}\dot{u}\dot{v} + \Gamma^{u}_{vv}\dot{v}^2 &= 0,\\
+\ddot{v} + \Gamma^{v}_{uu}\dot{u}^2 + 2\Gamma^{v}_{uv}\dot{u}\dot{v} + \Gamma^{v}_{vv}\dot{v}^2 &= 0,
+\end{align}
+where the Christoffel symbols $\Gamma^{i}_{jk}$ are computed from $E,F,G$. For the torus metric, $F=0$ and the coefficients depend only on $v$, producing two conserved quantities corresponding to rotations around the major and minor circles. These invariants explain the straight-line behavior in the unfolded rectangle.
+
+\subsection{Visualization}
+Figure~\ref{fig:torusgeo} overlays two such geodesics on the torus. The red curve corresponds to an irrational slope, so it never repeats and eventually visits every region. The orange curve uses slope $1$, making a closed geodesic that simultaneously loops the hole and the tube. The picture reinforces the link between the intuitive ``keep walking straight in the flat chart'' rule and the differential equations above.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figures/plotly_torus_geodesics.png}
+  \caption{Torus with two geodesics obtained from straight lines of different slopes in the parameter rectangle. Irrational slopes densely wind; rational slopes close.}
+  \label{fig:torusgeo}
+\end{figure}
+\section{Bridging Intuition and Computation}
+\begin{itemize}
+  \item \textbf{Tangent-plane intuition.} Before differentiating, sketch the parameter grid and imagine how it deforms; this predicts the signs of $E,F,G$ and highlights potential singularities where $\mathbf{r}_u$ and $\mathbf{r}_v$ align.
+  \item \textbf{Curvature direction intuition.} Identify how the surface bends while moving along $u$ and $v$. If bending flips sign between the directions, expect $K<0$.
+  \item \textbf{Discrete computations.} On meshes, approximate $\mathbf{r}_u$ and $\mathbf{r}_v$ with finite differences or edges of parameter lines, form the Gram matrix for $E,F,G$, then estimate $L,M,N$ via normal variations. Cotangent formulas provide stable approximations of $H$ and $K$ consistent with the smooth theory.
+  \item \textbf{Plotly visual checks.} The figures produced here via Plotly/Kaleido serve as sanity checks: color maps of $H$ or $K$ should agree with analytic formulas, and tangent-plane overlays verify orientation choices.
+\end{itemize}
+\section{Further Reading}
+For rigorous development see Do Carmo's \emph{Differential Geometry of Curves and Surfaces} or Pressley's \emph{Elementary Differential Geometry}. Crane et al.'s course notes on Discrete Differential Geometry show how the same intuition translates to algorithms.
+\end{document}

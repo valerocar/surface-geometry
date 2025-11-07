@@ -1,0 +1,21 @@
+\contentsline {section}{\numberline {1}Regular Curves and Arc Length}{1}{section.1}%
+\contentsline {section}{\numberline {2}Curvature}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Definition}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Coordinate-Free Formula}{2}{subsection.2.2}%
+\contentsline {paragraph}{Proof.}{2}{section*.2}%
+\contentsline {subsection}{\numberline {2.3}Example: Circle}{2}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Frenet Frame and Torsion}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Torsion}{2}{subsection.3.1}%
+\contentsline {paragraph}{Proof.}{3}{section*.4}%
+\contentsline {subsection}{\numberline {3.2}Frenet--Serret Equations}{3}{subsection.3.2}%
+\contentsline {paragraph}{Proof.}{3}{section*.5}%
+\contentsline {section}{\numberline {4}Examples}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Circular Helix}{3}{subsection.4.1}%
+\contentsline {paragraph}{Proof of constants.}{4}{section*.7}%
+\contentsline {subsection}{\numberline {4.2}Planar Curves and Signed Curvature}{4}{subsection.4.2}%
+\contentsline {paragraph}{Proof.}{4}{section*.8}%
+\contentsline {section}{\numberline {5}Osculating Circles and Radius of Curvature}{4}{section.5}%
+\contentsline {section}{\numberline {6}Existence and Uniqueness Theorem}{5}{section.6}%
+\contentsline {paragraph}{Proof Sketch.}{5}{section*.9}%
+\contentsline {section}{\numberline {7}Computational Remarks}{5}{section.7}%
+\contentsline {section}{\numberline {8}Further Reading}{5}{section.8}%

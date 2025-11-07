@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{microtype}
+\title{Notes on the Differential Geometry of Curves}
+\author{}
+\date{\today}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Regular Curves and Arc Length}
+Let $I \subset \mathbb{R}$ be an interval. A curve is a differentiable map $\gamma:I\to\mathbb{R}^3$. The curve is \emph{regular} if $\dot{\gamma}(t)\neq 0$ for all $t\in I$. Regularity ensures that each point admits a unique tangent direction described by \begin{equation}
+\mathbf{T}(t)=\frac{\dot{\gamma}(t)}{\lVert \dot{\gamma}(t) \rVert}.
+\end{equation}
+The arc-length function from $t_0\in I$ is
+\begin{equation}
+s(t)=\int_{t_0}^{t} \lVert \dot{\gamma}(u) \rVert\,du.
+\end{equation}
+If we reparametrize by $s$, the new curve (still denoted $\gamma$) satisfies $\lVert \gamma'(s)\rVert=1$; primes will denote differentiation with respect to arc length in the sequel.
+\section{Curvature}
+\subsection{Definition}
+For an arc-length parametrized curve the curvature is $\kappa(s)=\lVert \mathbf{T}'(s) \rVert$. The vector $\mathbf{T}'$ points toward the principal normal direction, and $\kappa$ quantifies the instantaneous turning of the tangent.
+\subsection{Coordinate-Free Formula}
+When the curve is given in an arbitrary parameter $t$, we may compute
+\begin{equation}
+\kappa(t) = \frac{\lVert \dot{\gamma}(t) \times \ddot{\gamma}(t) \rVert}{\lVert \dot{\gamma}(t) \rVert^3}.
+\end{equation}
+\paragraph{Proof.} Differentiate $\mathbf{T}(t)=\dot{\gamma}/\lVert \dot{\gamma} \rVert$ using the quotient rule and separate the component parallel to $\dot{\gamma}$. Because $\mathbf{T}'$ is orthogonal to $\mathbf{T}$, only the cross-product part remains, yielding the stated expression after simplification.
+\subsection{Example: Circle}
+Consider $\gamma(\theta)=(R\cos\theta,R\sin\theta)$, a planar circle of radius $R$. Then $\dot{\gamma}=(-R\sin\theta,R\cos\theta)$, $\ddot{\gamma}=(-R\cos\theta,-R\sin\theta)$, and $\lVert \dot{\gamma} \times \ddot{\gamma} \rVert = R^2$. Substituting into the formula gives $\kappa=1/R$ independent of $\theta$. Figure~\ref{fig:circle} visualizes the tangent and normal directions.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.55\textwidth]{figures/plotly_circle.png}
+  \caption{Unit circle with tangent $\mathbf{T}$ and inward normal $\mathbf{N}$ at a sample point. Image generated with Plotly.}
+  \label{fig:circle}
+\end{figure}
+\section{Frenet Frame and Torsion}
+Assume $\kappa(s) \neq 0$. The principal normal is $\mathbf{N}(s)=\mathbf{T}'(s)/\kappa(s)$, and the binormal is $\mathbf{B}(s)=\mathbf{T}(s) \times \mathbf{N}(s)$. These three vectors form an orthonormal moving frame.
+\subsection{Torsion}
+Torsion measures how the osculating plane twists:
+\begin{equation}
+\tau(s)= -\mathbf{B}'(s)\cdot\mathbf{N}(s).
+\end{equation}
+In a non-arc-length parameter $t$ we have
+\begin{equation}
+\tau(t)=\frac{(\dot{\gamma} \times \ddot{\gamma})\cdot \dddot{\gamma}}{\lVert \dot{\gamma} \times \ddot{\gamma} \rVert^2}.
+\end{equation}
+\paragraph{Proof.} Differentiate $\mathbf{B}=\mathbf{T}\times\mathbf{N}$ and expand. Since $\mathbf{T}$ and $\mathbf{N}$ are orthonormal, $\mathbf{B}'=-\tau \mathbf{N}$ for some scalar $\tau$; solving for $\tau$ produces the dot-product formula. Writing derivatives in terms of $t$ and using determinant identities yields the scalar triple product expression.
+\subsection{Frenet--Serret Equations}
+With $s$ the arc length parameter the frame satisfies
+\begin{align}
+\mathbf{T}' &= \kappa \mathbf{N}, \label{eq:tprime} \\
+\mathbf{N}' &= -\kappa \mathbf{T} + \tau \mathbf{B}, \label{eq:nprime} \\
+\mathbf{B}' &= -\tau \mathbf{N}. \label{eq:bprime}
+\end{align}
+\paragraph{Proof.} Equation~\eqref{eq:tprime} follows directly from the definition of $\mathbf{N}$. Differentiating $\mathbf{N}$ and decomposing into the orthonormal basis $\{\mathbf{T},\mathbf{N},\mathbf{B}\}$ yields~\eqref{eq:nprime}. Finally, differentiating $\mathbf{B}=\mathbf{T}\times\mathbf{N}$ and substituting the first two equations gives~\eqref{eq:bprime}.
+\section{Examples}
+\subsection{Circular Helix}
+Let $\gamma(t) = (a\cos t, a\sin t, bt)$ with constants $a>0$, $b\neq 0$. Computations show
+\begin{equation}
+\kappa = \frac{a}{a^2 + b^2}, \qquad \tau = \frac{b}{a^2 + b^2},
+\end{equation}
+both constant. Thus the helix bends and twists uniformly. Figure~\ref{fig:helix} depicts the Frenet frame obtained numerically via Plotly.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/plotly_helix.png}
+  \caption{Space curve $\gamma(t)=(\cos t, \sin t, 0.3 t)$ with tangent $\mathbf{T}$, normal $\mathbf{N}$, and binormal $\mathbf{B}$ at a sample point. Generated with Plotly.}
+  \label{fig:helix}
+\end{figure}
+\paragraph{Proof of constants.} Compute derivatives $\dot{\gamma}=(-a\sin t,a\cos t,b)$ and $\ddot{\gamma}=(-a\cos t,-a\sin t,0)$. Substitute into the general formulas to obtain the stated constants after simplification.
+\subsection{Planar Curves and Signed Curvature}
+For a plane curve expressed as $y=y(x)$ with $y'=dy/dx$, the signed curvature is
+\begin{equation}
+ k(x)=\frac{y''}{(1 + (y')^2)^{3/2}},
+\end{equation}
+where the sign indicates orientation relative to the positive normal. \paragraph{Proof.} Parameterize the curve as $\gamma(x)=(x,y(x))$ and evaluate the cross-product formula while keeping track of orientation.
+\section{Osculating Circles and Radius of Curvature}
+The osculating circle at $s_0$ shares position, tangent, and curvature with the curve. Its radius is $\rho = 1/\kappa(s_0)$ and center $\mathbf{C}=\gamma(s_0) + \rho\mathbf{N}(s_0)$. Higher curvature corresponds to a smaller osculating circle.
+\section{Existence and Uniqueness Theorem}
+Given smooth functions $\kappa(s) > 0$ and $\tau(s)$, there exists (up to rigid motions) a unique space curve whose Frenet invariants equal $\kappa$ and $\tau$. \paragraph{Proof Sketch.} The Frenet--Serret system~\eqref{eq:tprime}--\eqref{eq:bprime} forms a linear ODE on $SO(3)$ with smooth coefficients. Solving for $(\mathbf{T},\mathbf{N},\mathbf{B})$ with specified initial orthonormal data and integrating $\gamma'(s)=\mathbf{T}(s)$ produces a curve realizing the invariants. Any two solutions differ by a rigid motion because the system preserves inner products.
+\section{Computational Remarks}
+\begin{itemize}
+  \item Numerical differentiation amplifies noise; smooth or fit splines before computing $\kappa$ and $\tau$.
+  \item For discrete curves, use finite differences and re-normalize tangents to mimic arc-length parameterization.
+  \item The binormal becomes unstable when $\kappa$ is nearly zero; switch to alternative frames (e.g., parallel transport frames) for trajectories with inflection points.
+\end{itemize}
+\section{Further Reading}
+Standard references include Do Carmo's \emph{Differential Geometry of Curves and Surfaces} and Struik's \emph{Lectures on Classical Differential Geometry}. Modern applications appear in robotics motion planning and computer graphics, where curvature constraints regulate smooth paths.
+\end{document}

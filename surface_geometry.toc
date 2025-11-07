@@ -1,0 +1,36 @@
+\contentsline {section}{\numberline {1}Seeing Parametric Surfaces}{2}{section.1}%
+\contentsline {section}{\numberline {2}Tangent Planes Before Formulas}{2}{section.2}%
+\contentsline {section}{\numberline {3}First Fundamental Form: Measuring on the Surface}{3}{section.3}%
+\contentsline {paragraph}{Intuition.}{3}{section*.4}%
+\contentsline {paragraph}{From Intuition to Formula.}{4}{section*.5}%
+\contentsline {section}{\numberline {4}Second Fundamental Form: Measuring Bending}{4}{section.4}%
+\contentsline {paragraph}{Intuition to Formula.}{4}{section*.6}%
+\contentsline {section}{\numberline {5}Shape Operator and Curvatures}{4}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Principal Directions}{4}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Formulas}{4}{subsection.5.2}%
+\contentsline {paragraph}{Reading the Numbers.}{5}{section*.7}%
+\contentsline {section}{\numberline {6}Worked Examples}{5}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Metric of the Torus}{5}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Elliptic Paraboloid}{6}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Gauss Map and Intrinsic Meaning of $K$}{6}{section.7}%
+\contentsline {section}{\numberline {8}Parallel Transport on Surfaces}{7}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Idea}{7}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Formal Definition}{7}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Holonomy Intuition}{7}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Elementary View}{7}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Deriving the Geodesic Equations}{8}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Energy Functional}{8}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Variation}{8}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Connection Form}{8}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Elementary Tangential-Acceleration Proof}{9}{subsection.9.4}%
+\contentsline {section}{\numberline {10}Mean Curvature and Minimal Surfaces}{9}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Area Functional}{9}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}First Variation}{10}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Minimal Surface Equation}{10}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Klein Bottle: Non-Orientable Example}{11}{section.11}%
+\contentsline {section}{\numberline {12}Geodesics on the Torus}{11}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Intuitive Picture}{11}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Geodesic Equations}{12}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Visualization}{12}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Bridging Intuition and Computation}{13}{section.13}%
+\contentsline {section}{\numberline {14}Further Reading}{13}{section.14}%
